@@ -1,0 +1,1842 @@
+Arduino device port: COM13
+Power supply port: COM30
+Target temperature: 19.5°C
+
+Elapsed time: 0.3s
+Time: 16:20:49
+Set Voltage: +6.000V (cooling, PWM 75% of 7.99V)
+Measured Voltage: +5.988V
+Measured Current: +1.351A
+Temperature: 24.00°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 1.6s
+Time: 16:20:51
+Set Voltage: +6.000V (cooling, PWM 75% of 8.00V)
+Measured Voltage: +5.990V
+Measured Current: +1.304A
+Temperature: 24.21°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 2.9s
+Time: 16:20:52
+Set Voltage: +6.000V (cooling, PWM 75% of 8.00V)
+Measured Voltage: +5.990V
+Measured Current: +1.279A
+Temperature: 23.94°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 4.2s
+Time: 16:20:53
+Set Voltage: +6.000V (cooling, PWM 75% of 8.00V)
+Measured Voltage: +5.990V
+Measured Current: +1.271A
+Temperature: 23.36°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 5.5s
+Time: 16:20:55
+Set Voltage: +4.893V (cooling, PWM 61% of 8.00V)
+Measured Voltage: +4.892V
+Measured Current: +1.081A
+Temperature: 22.62°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 6.8s
+Time: 16:20:56
+Set Voltage: +3.957V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.908A
+Temperature: 21.87°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 8.1s
+Time: 16:20:57
+Set Voltage: +3.190V (cooling, PWM 40% of 8.00V)
+Measured Voltage: +3.199V
+Measured Current: +0.763A
+Temperature: 21.26°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 9.4s
+Time: 16:20:58
+Set Voltage: +2.644V (cooling, PWM 33% of 8.00V)
+Measured Voltage: +2.634V
+Measured Current: +0.646A
+Temperature: 20.82°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 10.7s
+Time: 16:21:00
+Set Voltage: +2.331V (cooling, PWM 29% of 8.00V)
+Measured Voltage: +2.321V
+Measured Current: +0.577A
+Temperature: 20.55°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 12.0s
+Time: 16:21:01
+Set Voltage: +2.266V (cooling, PWM 28% of 8.00V)
+Measured Voltage: +2.258V
+Measured Current: +0.563A
+Temperature: 20.45°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 13.3s
+Time: 16:21:02
+Set Voltage: +2.412V (cooling, PWM 30% of 8.00V)
+Measured Voltage: +2.415V
+Measured Current: +0.597A
+Temperature: 20.49°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 14.6s
+Time: 16:21:04
+Set Voltage: +2.652V (cooling, PWM 33% of 8.00V)
+Measured Voltage: +2.666V
+Measured Current: +0.649A
+Temperature: 20.59°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 15.9s
+Time: 16:21:05
+Set Voltage: +2.897V (cooling, PWM 36% of 8.00V)
+Measured Voltage: +2.885V
+Measured Current: +0.694A
+Temperature: 20.69°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 17.2s
+Time: 16:21:06
+Set Voltage: +3.150V (cooling, PWM 39% of 8.00V)
+Measured Voltage: +3.136V
+Measured Current: +0.743A
+Temperature: 20.79°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 18.5s
+Time: 16:21:08
+Set Voltage: +3.298V (cooling, PWM 41% of 8.00V)
+Measured Voltage: +3.293V
+Measured Current: +0.773A
+Temperature: 20.82°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 19.8s
+Time: 16:21:09
+Set Voltage: +3.353V (cooling, PWM 42% of 8.00V)
+Measured Voltage: +3.355V
+Measured Current: +0.786A
+Temperature: 20.79°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 21.1s
+Time: 16:21:10
+Set Voltage: +3.457V (cooling, PWM 43% of 8.00V)
+Measured Voltage: +3.450V
+Measured Current: +0.803A
+Temperature: 20.79°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 22.4s
+Time: 16:21:11
+Set Voltage: +3.446V (cooling, PWM 43% of 8.00V)
+Measured Voltage: +3.450V
+Measured Current: +0.802A
+Temperature: 20.72°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 23.7s
+Time: 16:21:13
+Set Voltage: +3.433V (cooling, PWM 43% of 8.00V)
+Measured Voltage: +3.418V
+Measured Current: +0.797A
+Temperature: 20.65°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 25.0s
+Time: 16:21:14
+Set Voltage: +3.431V (cooling, PWM 43% of 8.00V)
+Measured Voltage: +3.418V
+Measured Current: +0.796A
+Temperature: 20.59°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 26.3s
+Time: 16:21:15
+Set Voltage: +3.407V (cooling, PWM 43% of 8.00V)
+Measured Voltage: +3.418V
+Measured Current: +0.796A
+Temperature: 20.52°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 27.6s
+Time: 16:21:17
+Set Voltage: +3.378V (cooling, PWM 42% of 8.00V)
+Measured Voltage: +3.387V
+Measured Current: +0.788A
+Temperature: 20.45°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 28.9s
+Time: 16:21:18
+Set Voltage: +3.344V (cooling, PWM 42% of 8.00V)
+Measured Voltage: +3.355V
+Measured Current: +0.781A
+Temperature: 20.38°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 30.2s
+Time: 16:21:19
+Set Voltage: +3.369V (cooling, PWM 42% of 8.00V)
+Measured Voltage: +3.355V
+Measured Current: +0.782A
+Temperature: 20.35°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 31.5s
+Time: 16:21:21
+Set Voltage: +3.389V (cooling, PWM 42% of 8.00V)
+Measured Voltage: +3.387V
+Measured Current: +0.787A
+Temperature: 20.32°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 32.8s
+Time: 16:21:22
+Set Voltage: +3.391V (cooling, PWM 42% of 8.00V)
+Measured Voltage: +3.387V
+Measured Current: +0.786A
+Temperature: 20.28°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 34.1s
+Time: 16:21:23
+Set Voltage: +3.456V (cooling, PWM 43% of 8.00V)
+Measured Voltage: +3.449V
+Measured Current: +0.799A
+Temperature: 20.28°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 35.4s
+Time: 16:21:24
+Set Voltage: +3.469V (cooling, PWM 44% of 8.00V)
+Measured Voltage: +3.481V
+Measured Current: +0.807A
+Temperature: 20.25°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 36.7s
+Time: 16:21:26
+Set Voltage: +3.531V (cooling, PWM 44% of 8.00V)
+Measured Voltage: +3.544V
+Measured Current: +0.817A
+Temperature: 20.25°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 38.0s
+Time: 16:21:27
+Set Voltage: +3.476V (cooling, PWM 44% of 8.00V)
+Measured Voltage: +3.481V
+Measured Current: +0.804A
+Temperature: 20.18°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 39.3s
+Time: 16:21:28
+Set Voltage: +3.485V (cooling, PWM 44% of 8.00V)
+Measured Voltage: +3.481V
+Measured Current: +0.804A
+Temperature: 20.15°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 40.6s
+Time: 16:21:30
+Set Voltage: +3.474V (cooling, PWM 44% of 8.00V)
+Measured Voltage: +3.481V
+Measured Current: +0.804A
+Temperature: 20.11°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 41.9s
+Time: 16:21:31
+Set Voltage: +3.476V (cooling, PWM 44% of 8.00V)
+Measured Voltage: +3.481V
+Measured Current: +0.804A
+Temperature: 20.08°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 43.2s
+Time: 16:21:32
+Set Voltage: +3.572V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.575V
+Measured Current: +0.820A
+Temperature: 20.11°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 44.5s
+Time: 16:21:34
+Set Voltage: +3.571V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.575V
+Measured Current: +0.821A
+Temperature: 20.08°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 45.8s
+Time: 16:21:35
+Set Voltage: +3.570V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.575V
+Measured Current: +0.822A
+Temperature: 20.05°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 47.1s
+Time: 16:21:36
+Set Voltage: +3.550V (cooling, PWM 44% of 8.00V)
+Measured Voltage: +3.544V
+Measured Current: +0.815A
+Temperature: 20.01°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 48.4s
+Time: 16:21:38
+Set Voltage: +3.593V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.606V
+Measured Current: +0.826A
+Temperature: 20.01°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 49.7s
+Time: 16:21:39
+Set Voltage: +3.585V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.575V
+Measured Current: +0.821A
+Temperature: 19.98°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 51.0s
+Time: 16:21:40
+Set Voltage: +3.625V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.638V
+Measured Current: +0.833A
+Temperature: 19.98°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 52.3s
+Time: 16:21:41
+Set Voltage: +3.614V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.606V
+Measured Current: +0.832A
+Temperature: 19.95°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 53.6s
+Time: 16:21:43
+Set Voltage: +3.587V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.575V
+Measured Current: +0.827A
+Temperature: 19.91°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 54.9s
+Time: 16:21:44
+Set Voltage: +3.572V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.575V
+Measured Current: +0.822A
+Temperature: 19.88°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 56.2s
+Time: 16:21:45
+Set Voltage: +3.604V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.606V
+Measured Current: +0.827A
+Temperature: 19.88°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 57.5s
+Time: 16:21:47
+Set Voltage: +3.635V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.638V
+Measured Current: +0.833A
+Temperature: 19.88°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 58.8s
+Time: 16:21:48
+Set Voltage: +3.665V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.669V
+Measured Current: +0.840A
+Temperature: 19.88°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 60.1s
+Time: 16:21:49
+Set Voltage: +3.630V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.638V
+Measured Current: +0.833A
+Temperature: 19.84°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 61.4s
+Time: 16:21:51
+Set Voltage: +3.660V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.669V
+Measured Current: +0.838A
+Temperature: 19.84°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 62.7s
+Time: 16:21:52
+Set Voltage: +3.638V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.638V
+Measured Current: +0.832A
+Temperature: 19.81°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 64.0s
+Time: 16:21:53
+Set Voltage: +3.615V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.606V
+Measured Current: +0.825A
+Temperature: 19.78°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 65.3s
+Time: 16:21:54
+Set Voltage: +3.639V (cooling, PWM 45% of 8.00V)
+Measured Voltage: +3.638V
+Measured Current: +0.832A
+Temperature: 19.78°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 66.6s
+Time: 16:21:56
+Set Voltage: +3.662V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.669V
+Measured Current: +0.837A
+Temperature: 19.78°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 67.9s
+Time: 16:21:57
+Set Voltage: +3.684V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.669V
+Measured Current: +0.838A
+Temperature: 19.78°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 69.2s
+Time: 16:21:58
+Set Voltage: +3.706V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.700V
+Measured Current: +0.842A
+Temperature: 19.78°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 70.5s
+Time: 16:22:00
+Set Voltage: +3.729V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.848A
+Temperature: 19.78°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 71.8s
+Time: 16:22:01
+Set Voltage: +3.686V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.669V
+Measured Current: +0.835A
+Temperature: 19.74°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 73.1s
+Time: 16:22:02
+Set Voltage: +3.707V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.700V
+Measured Current: +0.843A
+Temperature: 19.74°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 74.4s
+Time: 16:22:04
+Set Voltage: +3.726V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.847A
+Temperature: 19.74°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 75.7s
+Time: 16:22:05
+Set Voltage: +3.697V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.700V
+Measured Current: +0.843A
+Temperature: 19.71°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 77.0s
+Time: 16:22:06
+Set Voltage: +3.715V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.700V
+Measured Current: +0.842A
+Temperature: 19.71°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 78.3s
+Time: 16:22:07
+Set Voltage: +3.667V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.669V
+Measured Current: +0.835A
+Temperature: 19.67°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 79.6s
+Time: 16:22:09
+Set Voltage: +3.747V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.850A
+Temperature: 19.71°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 80.9s
+Time: 16:22:10
+Set Voltage: +3.697V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.700V
+Measured Current: +0.842A
+Temperature: 19.67°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 82.3s
+Time: 16:22:11
+Set Voltage: +3.713V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.700V
+Measured Current: +0.841A
+Temperature: 19.67°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 83.6s
+Time: 16:22:13
+Set Voltage: +3.726V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.846A
+Temperature: 19.67°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 84.9s
+Time: 16:22:14
+Set Voltage: +3.740V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.847A
+Temperature: 19.67°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 86.2s
+Time: 16:22:15
+Set Voltage: +3.753V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.853A
+Temperature: 19.67°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 87.5s
+Time: 16:22:17
+Set Voltage: +3.767V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.853A
+Temperature: 19.67°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 88.8s
+Time: 16:22:18
+Set Voltage: +3.732V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.847A
+Temperature: 19.64°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 90.1s
+Time: 16:22:19
+Set Voltage: +3.744V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.860A
+Temperature: 19.64°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 91.4s
+Time: 16:22:20
+Set Voltage: +3.756V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.860A
+Temperature: 19.64°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 92.7s
+Time: 16:22:22
+Set Voltage: +3.767V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.857A
+Temperature: 19.64°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 94.0s
+Time: 16:22:23
+Set Voltage: +3.729V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.849A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 95.3s
+Time: 16:22:24
+Set Voltage: +3.739V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.848A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 96.6s
+Time: 16:22:26
+Set Voltage: +3.748V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.732V
+Measured Current: +0.848A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 97.9s
+Time: 16:22:27
+Set Voltage: +3.757V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.852A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 99.2s
+Time: 16:22:28
+Set Voltage: +3.766V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.852A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 100.5s
+Time: 16:22:30
+Set Voltage: +3.775V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.852A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 101.8s
+Time: 16:22:31
+Set Voltage: +3.783V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.860A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 103.1s
+Time: 16:22:32
+Set Voltage: +3.792V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.857A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 104.4s
+Time: 16:22:33
+Set Voltage: +3.801V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.857A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 105.7s
+Time: 16:22:35
+Set Voltage: +3.810V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.857A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 107.0s
+Time: 16:22:36
+Set Voltage: +3.753V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.850A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 108.3s
+Time: 16:22:37
+Set Voltage: +3.712V (cooling, PWM 46% of 8.00V)
+Measured Voltage: +3.700V
+Measured Current: +0.839A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 109.6s
+Time: 16:22:39
+Set Voltage: +3.766V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.853A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 110.9s
+Time: 16:22:40
+Set Voltage: +3.770V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.851A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 112.2s
+Time: 16:22:41
+Set Voltage: +3.775V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.852A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 113.5s
+Time: 16:22:43
+Set Voltage: +3.781V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.856A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 114.8s
+Time: 16:22:44
+Set Voltage: +3.787V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.856A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 116.1s
+Time: 16:22:45
+Set Voltage: +3.857V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.867A
+Temperature: 19.61°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 117.4s
+Time: 16:22:46
+Set Voltage: +3.799V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.855A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 118.7s
+Time: 16:22:48
+Set Voltage: +3.758V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.850A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 120.0s
+Time: 16:22:49
+Set Voltage: +3.762V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.851A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 121.3s
+Time: 16:22:50
+Set Voltage: +3.815V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.865A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 122.6s
+Time: 16:22:52
+Set Voltage: +3.770V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.850A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 123.8s
+Time: 16:22:53
+Set Voltage: +3.823V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.864A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 125.2s
+Time: 16:22:54
+Set Voltage: +3.827V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.863A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 126.5s
+Time: 16:22:56
+Set Voltage: +3.833V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.862A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 127.8s
+Time: 16:22:57
+Set Voltage: +3.839V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.860A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 129.1s
+Time: 16:22:58
+Set Voltage: +3.844V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.866A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 130.4s
+Time: 16:22:59
+Set Voltage: +3.801V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.855A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 131.7s
+Time: 16:23:01
+Set Voltage: +3.806V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.855A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 133.0s
+Time: 16:23:02
+Set Voltage: +3.809V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.794V
+Measured Current: +0.854A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 134.3s
+Time: 16:23:03
+Set Voltage: +3.812V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.859A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 135.6s
+Time: 16:23:05
+Set Voltage: +3.766V (cooling, PWM 47% of 8.00V)
+Measured Voltage: +3.763V
+Measured Current: +0.848A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 136.8s
+Time: 16:23:06
+Set Voltage: +3.817V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.859A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 138.2s
+Time: 16:23:07
+Set Voltage: +3.819V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.861A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 139.5s
+Time: 16:23:09
+Set Voltage: +3.871V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.867A
+Temperature: 19.57°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 140.8s
+Time: 16:23:10
+Set Voltage: +3.826V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.861A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 142.1s
+Time: 16:23:11
+Set Voltage: +3.831V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.860A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 143.4s
+Time: 16:23:12
+Set Voltage: +3.834V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.860A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 144.7s
+Time: 16:23:14
+Set Voltage: +3.838V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.859A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 146.0s
+Time: 16:23:15
+Set Voltage: +3.841V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.865A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+SHOT tune2_2min Running  |  t = 146 s   T = 19.54 °C   V = +3.826 V (cooling)
+
+Elapsed time: 147.3s
+Time: 16:23:16
+Set Voltage: +3.844V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.868A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 148.6s
+Time: 16:23:18
+Set Voltage: +3.847V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.867A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 149.9s
+Time: 16:23:19
+Set Voltage: +3.850V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.866A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 151.2s
+Time: 16:23:20
+Set Voltage: +3.854V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.865A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 152.5s
+Time: 16:23:22
+Set Voltage: +3.857V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.865A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 153.8s
+Time: 16:23:23
+Set Voltage: +3.860V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.865A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 155.1s
+Time: 16:23:24
+Set Voltage: +3.863V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.866A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 156.4s
+Time: 16:23:25
+Set Voltage: +3.818V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.859A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 157.7s
+Time: 16:23:27
+Set Voltage: +3.820V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.859A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 159.0s
+Time: 16:23:28
+Set Voltage: +3.869V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 160.3s
+Time: 16:23:29
+Set Voltage: +3.822V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.859A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 161.6s
+Time: 16:23:31
+Set Voltage: +3.873V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 162.9s
+Time: 16:23:32
+Set Voltage: +3.875V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.870A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 164.2s
+Time: 16:23:33
+Set Voltage: +3.878V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.870A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 165.5s
+Time: 16:23:35
+Set Voltage: +3.882V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.869A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 166.8s
+Time: 16:23:36
+Set Voltage: +3.885V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.869A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 168.1s
+Time: 16:23:37
+Set Voltage: +3.888V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.871A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 169.4s
+Time: 16:23:39
+Set Voltage: +3.842V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.826V
+Measured Current: +0.859A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 170.7s
+Time: 16:23:40
+Set Voltage: +3.845V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.863A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 172.0s
+Time: 16:23:41
+Set Voltage: +3.845V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.863A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 173.3s
+Time: 16:23:42
+Set Voltage: +3.846V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.863A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 174.6s
+Time: 16:23:44
+Set Voltage: +3.896V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.870A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 175.9s
+Time: 16:23:45
+Set Voltage: +3.898V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.870A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 177.2s
+Time: 16:23:46
+Set Voltage: +3.901V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.869A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 178.5s
+Time: 16:23:48
+Set Voltage: +3.904V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.871A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 179.8s
+Time: 16:23:49
+Set Voltage: +3.907V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.874A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 181.1s
+Time: 16:23:50
+Set Voltage: +3.862V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 182.4s
+Time: 16:23:52
+Set Voltage: +3.864V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 183.7s
+Time: 16:23:53
+Set Voltage: +3.865V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 185.0s
+Time: 16:23:54
+Set Voltage: +3.865V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 186.3s
+Time: 16:23:55
+Set Voltage: +3.866V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 187.6s
+Time: 16:23:57
+Set Voltage: +3.916V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.874A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 188.9s
+Time: 16:23:58
+Set Voltage: +3.918V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.875A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 190.2s
+Time: 16:23:59
+Set Voltage: +3.921V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.874A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 191.5s
+Time: 16:24:01
+Set Voltage: +3.924V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.874A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 192.8s
+Time: 16:24:02
+Set Voltage: +3.927V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.874A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 194.1s
+Time: 16:24:03
+Set Voltage: +3.930V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.875A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 195.4s
+Time: 16:24:05
+Set Voltage: +3.934V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.873A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 196.7s
+Time: 16:24:06
+Set Voltage: +3.888V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.867A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 198.0s
+Time: 16:24:07
+Set Voltage: +3.939V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 199.3s
+Time: 16:24:08
+Set Voltage: +3.941V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 200.6s
+Time: 16:24:10
+Set Voltage: +3.895V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.870A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 201.9s
+Time: 16:24:11
+Set Voltage: +3.897V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.867A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 203.2s
+Time: 16:24:12
+Set Voltage: +3.898V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.867A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 204.5s
+Time: 16:24:14
+Set Voltage: +3.899V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.867A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 205.8s
+Time: 16:24:15
+Set Voltage: +3.949V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 207.1s
+Time: 16:24:16
+Set Voltage: +3.950V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.880A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 208.4s
+Time: 16:24:18
+Set Voltage: +3.905V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.889V
+Measured Current: +0.868A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 209.7s
+Time: 16:24:19
+Set Voltage: +3.956V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 211.0s
+Time: 16:24:20
+Set Voltage: +3.909V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.873A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 212.3s
+Time: 16:24:21
+Set Voltage: +3.960V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 213.6s
+Time: 16:24:23
+Set Voltage: +3.962V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.878A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 214.9s
+Time: 16:24:24
+Set Voltage: +3.916V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.872A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 216.2s
+Time: 16:24:25
+Set Voltage: +3.853V (cooling, PWM 48% of 8.00V)
+Measured Voltage: +3.857V
+Measured Current: +0.864A
+Temperature: 19.47°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 217.5s
+Time: 16:24:27
+Set Voltage: +3.918V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.874A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 218.8s
+Time: 16:24:28
+Set Voltage: +3.917V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.874A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 220.1s
+Time: 16:24:29
+Set Voltage: +3.917V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.873A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 221.4s
+Time: 16:24:31
+Set Voltage: +3.967V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 222.7s
+Time: 16:24:32
+Set Voltage: +3.969V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.884A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 224.0s
+Time: 16:24:33
+Set Voltage: +3.923V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.872A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 225.3s
+Time: 16:24:34
+Set Voltage: +3.974V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.884A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 226.6s
+Time: 16:24:36
+Set Voltage: +3.976V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.884A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 227.9s
+Time: 16:24:37
+Set Voltage: +3.979V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.884A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 229.2s
+Time: 16:24:38
+Set Voltage: +3.934V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.873A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 230.6s
+Time: 16:24:40
+Set Voltage: +3.936V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.873A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 231.9s
+Time: 16:24:41
+Set Voltage: +3.937V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.920V
+Measured Current: +0.873A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 233.2s
+Time: 16:24:42
+Set Voltage: +3.937V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 234.5s
+Time: 16:24:44
+Set Voltage: +3.938V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.878A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 235.8s
+Time: 16:24:45
+Set Voltage: +3.988V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.884A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 237.1s
+Time: 16:24:46
+Set Voltage: +3.990V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.883A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 238.4s
+Time: 16:24:47
+Set Voltage: +3.993V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.883A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 239.7s
+Time: 16:24:49
+Set Voltage: +3.947V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.877A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 241.0s
+Time: 16:24:50
+Set Voltage: +3.998V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.882A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 242.3s
+Time: 16:24:51
+Set Voltage: +3.951V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.877A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 243.6s
+Time: 16:24:53
+Set Voltage: +4.002V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.887A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 244.9s
+Time: 16:24:54
+Set Voltage: +3.955V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.876A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 246.2s
+Time: 16:24:55
+Set Voltage: +4.006V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.887A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 247.5s
+Time: 16:24:57
+Set Voltage: +3.959V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 248.8s
+Time: 16:24:58
+Set Voltage: +4.010V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.888A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 250.1s
+Time: 16:24:59
+Set Voltage: +3.963V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.880A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 251.4s
+Time: 16:25:00
+Set Voltage: +4.014V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.889A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 252.7s
+Time: 16:25:02
+Set Voltage: +4.016V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.888A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 254.0s
+Time: 16:25:03
+Set Voltage: +3.970V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.882A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 255.3s
+Time: 16:25:04
+Set Voltage: +3.973V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.882A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 256.6s
+Time: 16:25:06
+Set Voltage: +3.973V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.882A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 257.9s
+Time: 16:25:07
+Set Voltage: +3.974V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.881A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 259.2s
+Time: 16:25:08
+Set Voltage: +3.975V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.882A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 260.5s
+Time: 16:25:10
+Set Voltage: +3.976V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.882A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 261.8s
+Time: 16:25:11
+Set Voltage: +4.026V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.888A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 263.1s
+Time: 16:25:12
+Set Voltage: +4.027V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.889A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 264.4s
+Time: 16:25:14
+Set Voltage: +3.982V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.883A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 265.7s
+Time: 16:25:15
+Set Voltage: +3.984V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.884A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 267.0s
+Time: 16:25:16
+Set Voltage: +3.985V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.883A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 268.3s
+Time: 16:25:17
+Set Voltage: +3.985V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.883A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 269.6s
+Time: 16:25:19
+Set Voltage: +4.035V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.894A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 270.9s
+Time: 16:25:20
+Set Voltage: +4.037V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.895A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 272.2s
+Time: 16:25:21
+Set Voltage: +4.040V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.904A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 273.5s
+Time: 16:25:23
+Set Voltage: +3.994V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.900A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 274.8s
+Time: 16:25:24
+Set Voltage: +3.997V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.897A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 276.1s
+Time: 16:25:25
+Set Voltage: +4.046V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.907A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 277.4s
+Time: 16:25:27
+Set Voltage: +4.048V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.909A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 278.7s
+Time: 16:25:28
+Set Voltage: +4.002V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.901A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 280.0s
+Time: 16:25:29
+Set Voltage: +4.005V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.896A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 281.3s
+Time: 16:25:30
+Set Voltage: +4.005V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.894A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 282.6s
+Time: 16:25:32
+Set Voltage: +3.941V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.882A
+Temperature: 19.47°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 283.9s
+Time: 16:25:33
+Set Voltage: +3.941V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.879A
+Temperature: 19.47°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 285.2s
+Time: 16:25:34
+Set Voltage: +3.938V (cooling, PWM 49% of 8.00V)
+Measured Voltage: +3.951V
+Measured Current: +0.878A
+Temperature: 19.47°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 286.5s
+Time: 16:25:36
+Set Voltage: +4.001V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.891A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 287.8s
+Time: 16:25:37
+Set Voltage: +4.000V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +3.983V
+Measured Current: +0.883A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 289.2s
+Time: 16:25:38
+Set Voltage: +4.001V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.888A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 290.5s
+Time: 16:25:40
+Set Voltage: +4.050V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.896A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 291.8s
+Time: 16:25:41
+Set Voltage: +4.052V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.896A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 293.1s
+Time: 16:25:42
+Set Voltage: +4.055V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.896A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 294.4s
+Time: 16:25:43
+Set Voltage: +4.010V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.892A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Elapsed time: 295.7s
+Time: 16:25:45
+Set Voltage: +4.061V (cooling, PWM 51% of 8.00V)
+Measured Voltage: +4.045V
+Measured Current: +0.896A
+Temperature: 19.54°C (target 19.5°C)
+--------------------------------------------------
+SHOT tune2_5min Running  |  t = 295 s   T = 19.54 °C   V = +4.045 V (cooling)
+
+Elapsed time: 297.0s
+Time: 16:25:46
+Set Voltage: +4.014V (cooling, PWM 50% of 8.00V)
+Measured Voltage: +4.014V
+Measured Current: +0.888A
+Temperature: 19.51°C (target 19.5°C)
+--------------------------------------------------
+
+Measurement stopped.
+Data saved to: measurements_20260924_162047\power_supply_temp_log.xlsx
+Plots saved to: measurements_20260924_162047\measurement_plots.png
+SHOT tune2_stopped Stopped: power supply off, data saved
