@@ -311,5 +311,30 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
             except:
                 pass
 
+STOP_FILE = 'STOP'  # Creating this file in the working directory stops a run cleanly (used by run.sh stop)
+
+def watch_for_stop(stop_event, duration=None):
+    """Set `stop_event` once `duration` seconds have passed or STOP_FILE appears"""
+    deadline = time.monotonic() + duration if duration else None
+    while not stop_event.wait(1):
+        if os.path.exists(STOP_FILE):
+            print(f"\n{STOP_FILE} file found, stopping...")
+            stop_event.set()
+        elif deadline and time.monotonic() >= deadline:
+            print(f"\nDuration of {duration / 60:g} min reached, stopping...")
+            stop_event.set()
+
 if __name__ == "__main__":
-    control_power_supply_with_temp_monitoring()
+    import argparse
+    parser = argparse.ArgumentParser(description="Heat or cool the Peltier to a target temperature and hold it")
+    parser.add_argument('--target', type=float, default=TARGET_TEMPERATURE, help="Target temperature (°C)")
+    parser.add_argument('--duration', type=float, default=None,
+                        help="Stop after this many minutes (default: run until Ctrl+C or a STOP file)")
+    args = parser.parse_args()
+
+    if os.path.exists(STOP_FILE):
+        os.remove(STOP_FILE)  # Left over from an earlier run
+    stop_event = threading.Event()
+    duration = args.duration * 60 if args.duration else None
+    threading.Thread(target=watch_for_stop, args=(stop_event, duration), daemon=True).start()
+    control_power_supply_with_temp_monitoring(target=args.target, stop_event=stop_event)
