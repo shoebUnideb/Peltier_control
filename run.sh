@@ -4,7 +4,10 @@
 #   ./run.sh check                         Pull the latest code and check the Arduino / power supply connections
 #   ./run.sh start [TARGET] [MINUTES]      Push, pull on the lab PC and start main.py detached (default 19.5 °C, 30 min;
 #                                          MINUTES=0 runs until stopped). The run keeps going if SSH disconnects.
+#   ./run.sh start dew [MINUTES] [OFFSET]  Same, but cool to the dew point (+ OFFSET °C, default 0) and hold it there
 #   ./run.sh log                           Follow the running experiment's console output (Ctrl+C only stops watching)
+#   ./run.sh plot                          Live graphs of the run (temperature, voltage, current) in a window here
+#   ./run.sh stream                        Print the run's whole console output, then follow it (used by mac_ui.py)
 #   ./run.sh status                        Show whether an experiment is running
 #   ./run.sh stop                          Stop the run cleanly (saves the data, switches the supply off)
 #   ./run.sh fetch                         Copy the latest measurements folder (+ console.log) into logs/
@@ -53,23 +56,39 @@ EOF
 start)
     target=${2:-19.5}
     minutes=${3:-30}
-    is_number "$target" && is_number "$minutes" || { echo "Usage: $0 start [TARGET] [MINUTES]"; exit 1; }
+    offset=${4:-0}
+    usage="Usage: $0 start [TARGET] [MINUTES]  or  $0 start dew [MINUTES] [OFFSET]"
+    { [[ $target == dew ]] || is_number "$target"; } && is_number "$minutes" && is_number "${offset#-}" \
+        || { echo "$usage"; exit 1; }
     if running; then
         echo "An experiment is already running on the lab PC (./run.sh stop to end it)."
         exit 1
     fi
     pull
-    args="--target $target"
+    if [[ $target == dew ]]; then
+        args="--dew --dew-offset $offset"
+        what="dew point$([[ $offset != 0 ]] && echo " + $offset °C")"
+    else
+        args="--target $target"
+        what="target $target °C"
+    fi
     [[ $minutes != 0 ]] && args+=" --duration $minutes"
     # Started through WMI so it isn't tied to this SSH session; Agg because there is no display
     cmdline="cmd /c \"set MPLBACKEND=Agg&& set PYTHONIOENCODING=utf-8&& $PYTHON -u main.py $args > console.log 2>&1\""
     result=$(remote "(Invoke-CimMethod Win32_Process -MethodName Create -Arguments @{CommandLine='$cmdline'; CurrentDirectory='$REPO'}).ReturnValue" | tr -d '\r')
     [[ $result == 0 ]] || { echo "Start failed (WMI return value: $result)"; exit 1; }
-    echo "Started: target $target °C, $([[ $minutes == 0 ]] && echo 'until stopped' || echo "$minutes min")."
+    echo "Started: $what, $([[ $minutes == 0 ]] && echo 'until stopped' || echo "$minutes min")."
     echo "Watch it with ./run.sh log, end it early with ./run.sh stop."
     ;;
 log)
     remote "Get-Content '$REPO\\console.log' -Encoding UTF8 -Tail 30 -Wait"
+    ;;
+plot)
+    # Whole console.log so far, then each new line as it is written; closing the window ends it
+    "$0" stream | python3 live_plot.py
+    ;;
+stream)
+    remote "Get-Content '$REPO\\console.log' -Encoding UTF8 -Wait"
     ;;
 status)
     if running; then
@@ -98,7 +117,7 @@ fetch)
     ls "logs/$folder"
     ;;
 *)
-    sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'
+    sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
     exit 1
     ;;
 esac

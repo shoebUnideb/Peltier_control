@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 import signal
 import threading
-from pid_utils import PT100TempLogger, save_data, pid_control
+from pid_utils import PT100TempLogger, DewPointTarget, dew_point, save_data, pid_control
 import serial.tools.list_ports
 
 TARGET_TEMPERATURE = 19.5   # Default target (°C); the UI lets you change it before starting
@@ -37,6 +37,15 @@ K_FF = 0.5  # V/°C
 # While the temperature is more than this many °C from the target and still moving toward it, the
 # integral pauses: integrating the large errors of the approach caused the overshoot.
 INTEGRAL_BAND = 1.0
+
+# Dew point mode: the target follows the dew point of the room air (from the DHT22). The plate first cools at
+# full speed to DEW_APPROACH_OFFSET above the dew point, then the target ramps down to DEW_HOLD_OFFSET above it
+# over DEW_SETTLE_TIME seconds and holds there until the run is stopped.
+DEW_APPROACH_OFFSET = 2.5  # °C above the dew point for the fast approach
+DEW_SETTLE_TIME = 10.0     # Seconds to ramp the target from the approach offset to the hold offset
+DEW_HOLD_OFFSET = 0.0      # °C above the dew point to hold (0 = at the dew point)
+DEW_SMOOTHING = 0.1        # Weight of each new dew point reading (~10 readings to follow a change)
+DEW_APPROACH_BAND = 0.3    # The settle phase starts once the plate is within this of the approach target (°C)
 
 def signal_handler(signum, frame):
     """Handle keyboard interrupts and system signals"""
@@ -127,15 +136,19 @@ def preflight_check(arduino_port=None, ps_port=None):
     return checks
 
 def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_event=None, on_reading=None,
-                                              arduino_port=None, ps_port=None):
+                                              arduino_port=None, ps_port=None, dew=False,
+                                              dew_hold_offset=DEW_HOLD_OFFSET):
     """Heat or cool the Peltier to `target` and hold it there until `stop_event` is set (or Ctrl+C).
+
+    With `dew=True`, `target` is ignored and the plate is brought to `dew_hold_offset` °C above the dew point
+    of the room air instead (see DewPointTarget), following it as the humidity changes.
 
     `on_reading`, if given, is called with each logged data row (used by the UI). `arduino_port`/`ps_port`
     override auto-detection.
     Returns (error, output_folder): `error` is None on a normal stop or the message if the run stopped on
     an error; `output_folder` is the measurements_<timestamp> folder the data and plots were saved to.
     """
-    if not TARGET_RANGE[0] <= target <= TARGET_RANGE[1]:
+    if not dew and not TARGET_RANGE[0] <= target <= TARGET_RANGE[1]:
         raise ValueError(f"Target {target}°C is outside the allowed range {TARGET_RANGE}")
     stop_event = stop_event or threading.Event()
     # Initialize signal handlers for graceful shutdown (only possible on the main thread)
@@ -162,6 +175,8 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
     duty = 0            # Current PWM duty (0-255)
     start_error = None
     failed_reads = 0
+    dew_target = None   # DewPointTarget in dew point mode
+    clamped = False     # Whether the dew point target was clamped to TARGET_RANGE
 
     def apply_voltage(voltage):
         """Set bridge direction and PWM duty for a signed average Peltier voltage (+ cooling, - heating)"""
@@ -186,12 +201,30 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
         else:
             raise RuntimeError("No valid Pt100 reading; check the Pt100 / MAX31865 wiring (pins 10-13, power)")
 
-        # Feedforward: preload the integral with the effort expected to hold the target
-        ambient = temp_logger.read_ambient_temperature()
+        # The DHT22 needs ~2 s between reads, so retry slowly
+        for attempt in range(3):
+            _, humidity, ambient = temp_logger.read_all()
+            if humidity is not None and ambient is not None:
+                break
+            if attempt < 2:
+                time.sleep(2.5)
+        if dew:
+            if humidity is None or ambient is None:
+                raise RuntimeError("Dew point mode needs the DHT22 (humidity) but it gives no reading; check its wiring")
+            dew_target = DewPointTarget(dew_point(ambient, humidity), DEW_APPROACH_OFFSET, DEW_SETTLE_TIME,
+                                        dew_hold_offset, DEW_SMOOTHING, DEW_APPROACH_BAND)
+            target = dew_target.update(plate_temperature, None, None, time.monotonic())
+            print(f"Dew point: {dew_target.dew:.2f}°C (air {ambient:.1f}°C, RH {humidity:.1f}%); "
+                  f"cooling to {target:.2f}°C, then settling to {dew_target.dew + dew_hold_offset:.2f}°C")
+            if dew_target.dew + dew_hold_offset < TARGET_RANGE[0]:
+                print(f"Warning: the dew point target is below {TARGET_RANGE[0]}°C; the target is clamped there")
+
+        # Feedforward: preload the integral with the effort expected to hold the (final) target
         source = 'DHT22'
         if ambient is None:  # No DHT22 reading; the plate is at ambient if it has been idle
             ambient, source = plate_temperature, 'plate, DHT22 unavailable'
-        integral = min(max(0.0, K_FF * (ambient - target)), effort_max)
+        hold_target = dew_target.dew + dew_hold_offset if dew else target
+        integral = min(max(0.0, K_FF * (ambient - hold_target)), effort_max)
         print(f"Ambient: {ambient:.2f}°C ({source}); feedforward effort {integral:+.2f}V")
 
         port2 = ps_port or find_power_supply_port()
@@ -204,11 +237,22 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
         ps.write(f'VOLT {V_SUPPLY}')
         ps.write('OUTP ON')
 
-        print(f"Target temperature: {target}°C")
+        print(f"Target temperature: {'dew point' if dew else f'{target}°C'}")
         start_time = time.time()
 
         while not stop_event.is_set():
-            temperature = temp_logger.read_temperature()
+            temperature, humidity, air_temperature = temp_logger.read_all()
+            current_dew = dew_point(air_temperature, humidity) if humidity and air_temperature is not None else None
+            if dew_target:
+                phase = dew_target.phase
+                target = dew_target.update(temperature, humidity, air_temperature, time.monotonic())
+                if dew_target.phase != phase:
+                    print(f"\nPhase: {phase} -> {dew_target.phase} (target {target:.2f}°C)")
+                if not TARGET_RANGE[0] <= target <= TARGET_RANGE[1]:
+                    target = min(max(target, TARGET_RANGE[0]), TARGET_RANGE[1])
+                    if not clamped:
+                        print(f"Warning: target clamped to {target}°C (allowed range {TARGET_RANGE})")
+                    clamped = True
 
             if temperature is None:  # On a failed reading, hold the previous voltage
                 failed_reads += 1
@@ -243,6 +287,10 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
                 'Timestamp': timestamp,
                 'Target_Temperature': target,
                 'Ambient_Temperature': ambient,
+                'Air_Temperature': air_temperature,
+                'Humidity': humidity,
+                'Dew_Point': dew_target.dew if dew_target else current_dew,
+                'Phase': dew_target.phase if dew_target else 'fixed',
                 'Set_Voltage': voltage if abs(voltage) >= V_MIN else 0.0,
                 'PWM_Duty_Percent': 100 * duty / 255,
                 'Supply_Voltage': supply_voltage,
@@ -259,7 +307,11 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
             print(f'Set Voltage: {voltage:+.3f}V ({state}, PWM {100 * duty / 255:.0f}% of {supply_voltage:.2f}V)')
             print(f'Measured Voltage: {actual_voltage:+.3f}V')
             print(f'Measured Current: {actual_current:+.3f}A')
-            print(f'Temperature: {temperature:.2f}°C (target {target}°C)' if temperature is not None else 'Temperature: Reading Error')
+            if current_dew is not None:
+                print(f'Air: {air_temperature:.1f}°C, RH {humidity:.1f}%, dew point '
+                      f'{dew_target.dew if dew_target else current_dew:.2f}°C'
+                      + (f', phase {dew_target.phase}' if dew_target else ''))
+            print(f'Temperature: {temperature:.2f}°C (target {target:.2f}°C)' if temperature is not None else 'Temperature: Reading Error')
             print('-' * 50)
 
             stop_event.wait(1)
@@ -328,6 +380,10 @@ if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Heat or cool the Peltier to a target temperature and hold it")
     parser.add_argument('--target', type=float, default=TARGET_TEMPERATURE, help="Target temperature (°C)")
+    parser.add_argument('--dew', action='store_true',
+                        help="Dew point mode: cool to the dew point of the room air and hold it (ignores --target)")
+    parser.add_argument('--dew-offset', type=float, default=DEW_HOLD_OFFSET,
+                        help="Dew point mode: hold this many °C above the dew point (default %(default)s)")
     parser.add_argument('--duration', type=float, default=None,
                         help="Stop after this many minutes (default: run until Ctrl+C or a STOP file)")
     args = parser.parse_args()
@@ -337,4 +393,5 @@ if __name__ == "__main__":
     stop_event = threading.Event()
     duration = args.duration * 60 if args.duration else None
     threading.Thread(target=watch_for_stop, args=(stop_event, duration), daemon=True).start()
-    control_power_supply_with_temp_monitoring(target=args.target, stop_event=stop_event)
+    control_power_supply_with_temp_monitoring(target=args.target, stop_event=stop_event, dew=args.dew,
+                                              dew_hold_offset=args.dew_offset)

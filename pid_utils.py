@@ -1,3 +1,4 @@
+import math
 import serial
 import time
 import pandas as pd
@@ -15,37 +16,39 @@ class PT100TempLogger:
             print(f"Error opening serial port: {e}")
             raise
 
-    def read_temperature(self):
-        """Read temperature data from Arduino"""
+    def read_all(self):
+        """One sensor reading: (plate_temp, humidity, air_temp), each None if invalid.
+
+        The firmware replies "pt100_temp,dht_humidity,dht_temp" to 'r'; the DHT22 fields are "nan" if its read failed.
+        """
         try:
             self.ser.reset_input_buffer()  # Drop stale replies so this reading is current
             self.ser.write(b'r')
             line = self.ser.readline().decode('utf-8', errors='replace').strip()
-            try:
-                # Firmware sends "pt100_temp,dht_humidity,dht_temp"; the first field is the plate temperature
-                temperature = float(line.split(',')[0])
-                if not -50 <= temperature <= 150:
-                    # e.g. -244 °C means the MAX31865 read 0 ohm: Pt100 or MAX31865 disconnected
-                    print(f"Implausible Pt100 reading {temperature:.2f}°C; check the Pt100 / MAX31865 wiring")
-                    return None
-                return temperature
-            except ValueError:
-                print(f"Invalid data received: {line!r}")
-                return None
         except serial.SerialException as e:
             print(f"Error reading from serial port: {e}")
-            return None
+            return None, None, None
+        fields = line.split(',')
+        try:
+            temperature = float(fields[0])
+        except ValueError:
+            print(f"Invalid data received: {line!r}")
+            return None, None, None
+        if not -50 <= temperature <= 150:
+            # e.g. -244 °C means the MAX31865 read 0 ohm: Pt100 or MAX31865 disconnected
+            print(f"Implausible Pt100 reading {temperature:.2f}°C; check the Pt100 / MAX31865 wiring")
+            temperature = None
+        humidity = _field(fields, 1, 0, 100)
+        air_temperature = _field(fields, 2, -20, 60)
+        return temperature, humidity, air_temperature
+
+    def read_temperature(self):
+        """Read the Pt100 plate temperature; None if the reading is invalid"""
+        return self.read_all()[0]
 
     def read_ambient_temperature(self):
-        """Read the DHT22 air temperature (third field of the 'r' reply); None if the DHT22 read fails"""
-        try:
-            self.ser.reset_input_buffer()
-            self.ser.write(b'r')
-            line = self.ser.readline().decode('utf-8', errors='replace').strip()
-            temperature = float(line.split(',')[2])
-        except (serial.SerialException, ValueError, IndexError):
-            return None
-        return temperature if -20 <= temperature <= 60 else None  # Also rejects "nan" from a failed DHT22 read
+        """Read the DHT22 air temperature; None if the DHT22 read fails"""
+        return self.read_all()[2]
 
     def set_bridge(self, command, duty=0):
         """Set the BTS7960 H-bridge: 'f' forward or 'b' backward at PWM duty 0-255, or 'o' off"""
@@ -62,13 +65,67 @@ class PT100TempLogger:
         if hasattr(self, 'ser') and self.ser.is_open:
             self.ser.close()
 
+def _field(fields, index, low, high):
+    """`fields[index]` as a float if it is within [low, high], else None (also for "nan" or a missing field)"""
+    try:
+        value = float(fields[index])
+    except (ValueError, IndexError):
+        return None
+    return value if low <= value <= high else None
+
+def dew_point(air_temperature, humidity):
+    """Dew point (°C) of air at `air_temperature` (°C) and relative `humidity` (%), Magnus formula"""
+    gamma = math.log(humidity / 100) + 17.62 * air_temperature / (243.12 + air_temperature)
+    return 243.12 * gamma / (17.62 - gamma)
+
+class DewPointTarget:
+    """Target temperature that brings the plate to the dew point and holds it there.
+
+    Three phases: 'approach' targets `approach_offset` °C above the dew point, so the plate cools at full speed
+    without overshooting below it; once the plate is within `band` of that, 'settle' ramps the target down to
+    `hold_offset` above the dew point over `settle_time` seconds; 'hold' then stays there. The dew point is
+    recalculated from every DHT22 reading and smoothed (weight `smoothing` per reading), so the target follows
+    slow changes in the room's humidity without jumping on sensor noise.
+    """
+    def __init__(self, dew, approach_offset, settle_time, hold_offset, smoothing, band):
+        self.dew = dew
+        self.approach_offset, self.settle_time, self.hold_offset = approach_offset, settle_time, hold_offset
+        self.smoothing, self.band = smoothing, band
+        self.phase = 'approach'
+        self.settle_start = None
+
+    def update(self, temperature, humidity, air_temperature, now):
+        """Take a new reading (None values are skipped) at monotonic time `now`; return the current target"""
+        if humidity and air_temperature is not None:
+            self.dew += self.smoothing * (dew_point(air_temperature, humidity) - self.dew)
+        if (self.phase == 'approach' and temperature is not None
+                and temperature <= self.dew + self.approach_offset + self.band):
+            self.phase, self.settle_start = 'settle', now
+        if self.phase == 'settle' and now - self.settle_start >= self.settle_time:
+            self.phase = 'hold'
+        return self.target(now)
+
+    def target(self, now):
+        if self.phase == 'approach':
+            offset = self.approach_offset
+        elif self.phase == 'settle':
+            progress = (now - self.settle_start) / self.settle_time if self.settle_time else 1.0
+            offset = self.approach_offset + (self.hold_offset - self.approach_offset) * min(progress, 1.0)
+        else:
+            offset = self.hold_offset
+        return self.dew + offset
+
 def create_plots(df, output_folder):
     """Create and save plots from the measurement data"""
     df['Seconds'] = (df['Timestamp'] - df['Timestamp'].iloc[0]).dt.total_seconds()
     plt.figure(figsize=(15, 10))
 
     plt.subplot(2, 2, 1)
-    plt.plot(df['Seconds'], df['Temperature'], 'b-')
+    plt.plot(df['Seconds'], df['Temperature'], 'b-', label='Plate')
+    plt.plot(df['Seconds'], df['Target_Temperature'], 'k--', label='Target')
+    if 'Dew_Point' in df and df['Dew_Point'].notna().any():
+        plt.plot(df['Seconds'], df['Dew_Point'], 'c:', label='Dew point')
+    plt.legend()
     plt.xlabel('Time (seconds)')
     plt.ylabel('Temperature (°C)')
     plt.title('Temperature vs Time')
