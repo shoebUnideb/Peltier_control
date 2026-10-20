@@ -16,7 +16,7 @@ from matplotlib.figure import Figure
 import serial.tools.list_ports
 from main import (control_power_supply_with_temp_monitoring, preflight_check,
                   find_arduino_port, find_power_supply_port,
-                  TARGET_TEMPERATURE, TARGET_RANGE, V_MIN)
+                  TARGET_TEMPERATURE, TARGET_RANGE, V_MIN, DEW_HOLD_OFFSET)
 
 # -- Palette (light background, one accent per role; text stays off the accent colors) --
 BG = '#fcfcfb'
@@ -26,6 +26,7 @@ INK = '#0b0b0b'
 INK2 = '#52514e'
 MUTED = '#898781'
 BLUE = '#2a78d6'      # cooling / primary accent
+CYAN = '#1aa3b8'      # dew point
 ORANGE = '#eb6834'    # heating
 GREEN = '#0ca30c'     # ok
 RED = '#c4362f'       # error
@@ -183,11 +184,13 @@ class HistoryWindow(tk.Toplevel):
         if run['xlsx']:
             try:
                 df = pd.read_excel(run['xlsx'])
-                target = df['Target_Temperature'].iloc[0]
+                dew_run = 'Phase' in df and (df['Phase'] != 'fixed').any()
                 start, end = df['Timestamp'].iloc[0], df['Timestamp'].iloc[-1]
                 duration = (end - start).total_seconds()
                 fmt_temp = lambda v: 'no reading' if pd.isna(v) else f'{v:.2f} °C'
-                lines += [f"Target: {target:g} °C", f"Duration: {duration:.0f} s ({len(df)} readings)",
+                target = (f"dew point (held at {df['Target_Temperature'].iloc[-1]:.2f} °C)" if dew_run
+                          else f"{df['Target_Temperature'].iloc[0]:g} °C")
+                lines += [f"Target: {target}", f"Duration: {duration:.0f} s ({len(df)} readings)",
                          f"Start → end temperature: {fmt_temp(df['Temperature'].iloc[0])} → "
                          f"{fmt_temp(df['Temperature'].iloc[-1])}"]
             except Exception as e:
@@ -233,7 +236,7 @@ class ControllerUI:
         self.error = None
         self.last_run_folder = None
         self.history_win = None
-        self.t, self.temp, self.volt, self.curr = [], [], [], []
+        self.t, self.temp, self.volt, self.curr, self.targets, self.dews = [], [], [], [], [], []
         self.t0 = None
         self.target = TARGET_TEMPERATURE
 
@@ -362,11 +365,26 @@ class ControllerUI:
         bar = tk.Frame(self.root, bg=BG)
         bar.pack(fill='x', padx=10, pady=8)
 
-        tk.Label(bar, text=f'Target (°C, {TARGET_RANGE[0]:g}–{TARGET_RANGE[1]:g}):', bg=BG, fg=INK2).pack(side='left')
+        self.mode_var = tk.StringVar(value='fixed')
+        self.mode_buttons = []
+        for text, value in (('Fixed target', 'fixed'), ('Dew point', 'dew')):
+            b = tk.Radiobutton(bar, text=text, value=value, variable=self.mode_var, command=self.update_mode,
+                               bg=BG, fg=INK, activebackground=BG, selectcolor=BG)
+            b.pack(side='left')
+            self.mode_buttons.append(b)
+
+        tk.Label(bar, text=f'Target (°C, {TARGET_RANGE[0]:g}–{TARGET_RANGE[1]:g}):', bg=BG, fg=INK2).pack(side='left',
+                                                                                                padx=(12, 0))
         self.target_var = tk.StringVar(value=str(TARGET_TEMPERATURE))
         self.target_spin = tk.Spinbox(bar, from_=TARGET_RANGE[0], to=TARGET_RANGE[1], increment=0.5,
                                       textvariable=self.target_var, width=7, justify='center')
-        self.target_spin.pack(side='left', padx=(6, 16))
+        self.target_spin.pack(side='left', padx=(6, 12))
+
+        tk.Label(bar, text='Hold above dew point (°C):', bg=BG, fg=INK2).pack(side='left')
+        self.offset_var = tk.StringVar(value=f'{DEW_HOLD_OFFSET:g}')
+        self.offset_spin = tk.Spinbox(bar, from_=-2, to=10, increment=0.5, textvariable=self.offset_var, width=5,
+                                      justify='center')
+        self.offset_spin.pack(side='left', padx=(6, 16))
 
         self.start_btn = tk.Button(bar, text='▶  Start', width=12, command=self.start,
                                    bg=GREEN, fg='white', activebackground='#0a8f0a', relief='flat',
@@ -381,6 +399,15 @@ class ControllerUI:
 
         self.status = tk.Label(bar, text='Idle', bg=BG, fg=INK2)
         self.status.pack(side='left', padx=16)
+        self.update_mode()
+
+    def update_mode(self, running=False):
+        """Enable the inputs that apply to the selected mode (none while a run is going)"""
+        dew = self.mode_var.get() == 'dew'
+        self.target_spin.config(state='disabled' if dew or running else 'normal')
+        self.offset_spin.config(state='normal' if dew and not running else 'disabled')
+        for b in self.mode_buttons:
+            b.config(state='disabled' if running else 'normal')
 
     def open_history(self, select=None):
         select = select or self.last_run_folder
@@ -402,9 +429,13 @@ class ControllerUI:
         self.stat_mode = Stat(inner, 'MODE')
         self.stat_volt = Stat(inner, 'SET VOLTAGE')
         self.stat_curr = Stat(inner, 'CURRENT')
-        self.stat_ambient = Stat(inner, 'AMBIENT (start)')
-        for s in (self.stat_elapsed, self.stat_temp, self.stat_mode, self.stat_volt, self.stat_curr, self.stat_ambient):
-            s.pack(side='left', padx=18)
+        self.stat_target = Stat(inner, 'TARGET')
+        self.stat_dew = Stat(inner, 'DEW POINT')
+        self.stat_air = Stat(inner, 'AIR / RH')
+        self.stat_phase = Stat(inner, 'PHASE')
+        for s in (self.stat_elapsed, self.stat_temp, self.stat_target, self.stat_dew, self.stat_air, self.stat_phase,
+                  self.stat_mode, self.stat_volt, self.stat_curr):
+            s.pack(side='left', padx=14)
 
     # ---------------------------------------------------------------- graphs
     def build_graphs(self):
@@ -434,8 +465,10 @@ class ControllerUI:
         ax_i.set_xlabel('Time (s)', color=INK2, fontsize=8)
 
         self.band = ax_t.axhspan(self.target - 0.1, self.target + 0.1, color=GRID, alpha=0.7, lw=0)
-        self.target_line = ax_t.axhline(self.target, color=INK2, linestyle='--', linewidth=1)
-        self.temp_line, = ax_t.plot([], [], color=BLUE, linewidth=2)
+        self.target_line, = ax_t.plot([], [], color=INK2, linestyle='--', linewidth=1, label='Target')
+        self.dew_line, = ax_t.plot([], [], color=CYAN, linestyle=':', linewidth=2, label='Dew point')
+        self.temp_line, = ax_t.plot([], [], color=BLUE, linewidth=2, label='Plate')
+        ax_t.legend(loc='upper right', fontsize=8, frameon=False)
         ax_t.set_xlim(0, 60)
         ax_t.set_ylim(self.target - 3, self.target + 3)
         ax_v.axhline(0, color=MUTED, linewidth=0.8)
@@ -452,12 +485,15 @@ class ControllerUI:
 
     # ---------------------------------------------------------------- start/stop
     def start(self):
+        dew = self.mode_var.get() == 'dew'
         try:
             target = float(self.target_var.get())
+            offset = float(self.offset_var.get())
         except ValueError:
-            target = None
-        if target is None or not TARGET_RANGE[0] <= target <= TARGET_RANGE[1]:
-            self.status.config(text=f'Enter a target between {TARGET_RANGE[0]:g} and {TARGET_RANGE[1]:g} °C')
+            target = offset = None
+        if offset is None or (not dew and not TARGET_RANGE[0] <= target <= TARGET_RANGE[1]):
+            self.status.config(text=f'Enter a target between {TARGET_RANGE[0]:g} and {TARGET_RANGE[1]:g} °C'
+                                    ' and a number for the dew point offset')
             return
 
         bad = [row for row in self.check_rows if row[1].itemcget(row[1].oval, 'fill') == RED]
@@ -471,10 +507,10 @@ class ControllerUI:
 
         self.target = target
         self.band.set_bounds(0, target - 0.1, 1, 0.2)  # axhspan returns a Rectangle: (x0, y0, width, height)
-        self.target_line.set_ydata([target, target])
+        self.band.set_visible(not dew)  # The dew point target moves, so no fixed band
         self.canvas.draw_idle()
 
-        self.t, self.temp, self.volt, self.curr = [], [], [], []
+        self.t, self.temp, self.volt, self.curr, self.targets, self.dews = [], [], [], [], [], []
         self.t0 = None
         self.error = None
         self.stop_event = threading.Event()
@@ -482,19 +518,21 @@ class ControllerUI:
 
         def run():
             self.error, folder = control_power_supply_with_temp_monitoring(
-                target, self.stop_event, self.readings.put, arduino_port, ps_port)
+                target, self.stop_event, self.readings.put, arduino_port, ps_port, dew=dew, dew_hold_offset=offset)
             self.last_run_folder = os.path.abspath(folder) if folder else None
 
         self.worker = threading.Thread(target=run)
         self.worker.start()
-        self.target_spin.config(state='disabled')
+        self.update_mode(running=True)
         self.arduino_box.config(state='disabled')
         self.ps_box.config(state='disabled')
         self.check_btn.config(state='disabled')
         self.start_btn.config(state='disabled')
         self.stop_btn.config(state='normal')
-        self.stat_ambient.set('—')
-        self.status.config(text=f'Starting, target {target:g} °C…')
+        for stat in (self.stat_target, self.stat_dew, self.stat_air, self.stat_phase):
+            stat.set('—')
+        what = 'the dew point' + (f' + {offset:g} °C' if offset else '') if dew else f'target {target:g} °C'
+        self.status.config(text=f'Starting, {what}…')
 
     def stop(self):
         self.stop_event.set()
@@ -516,12 +554,19 @@ class ControllerUI:
             self.temp.append(float('nan') if row['Temperature'] is None else row['Temperature'])
             self.volt.append(row['Set_Voltage'])
             self.curr.append(row['Measured_Current'])
-            if row.get('Ambient_Temperature') is not None:
-                self.stat_ambient.set(f"{row['Ambient_Temperature']:.1f} °C")
+            self.targets.append(row['Target_Temperature'])
+            self.dews.append(float('nan') if row['Dew_Point'] is None else row['Dew_Point'])
+            self.stat_target.set(f"{row['Target_Temperature']:.2f} °C")
+            self.stat_dew.set('—' if row['Dew_Point'] is None else f"{row['Dew_Point']:.2f} °C", CYAN)
+            if row['Air_Temperature'] is not None and row['Humidity'] is not None:
+                self.stat_air.set(f"{row['Air_Temperature']:.1f} °C / {row['Humidity']:.0f}%")
+            self.stat_phase.set(row['Phase'])
             new_data = True
 
         if new_data:
             self.temp_line.set_data(self.t, self.temp)
+            self.target_line.set_data(self.t, self.targets)
+            self.dew_line.set_data(self.t, self.dews)
             self.volt_line.set_data(self.t, self.volt)
             self.curr_line.set_data(self.t, self.curr)
             for ax in self.axes:
@@ -542,7 +587,7 @@ class ControllerUI:
 
         if self.worker and not self.worker.is_alive():
             self.worker = None
-            self.target_spin.config(state='normal')
+            self.update_mode()
             self.arduino_box.config(state='readonly')
             self.ps_box.config(state='readonly')
             self.check_btn.config(state='normal')

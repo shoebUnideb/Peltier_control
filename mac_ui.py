@@ -125,9 +125,9 @@ class MacUI:
         ttk.Spinbox(row, from_=0, to=600, increment=5, textvariable=self.minutes_var, width=5
                     ).pack(side='left', padx=(4, 16))
 
-        self.start_btn = ttk.Button(row, text='▶  Start', command=self.start)
+        self.start_btn = ttk.Button(row, text='Start', command=self.start)
         self.start_btn.pack(side='left')
-        self.stop_btn = ttk.Button(row, text='■  Stop', command=self.stop)
+        self.stop_btn = ttk.Button(row, text='Stop', command=self.stop)
         self.stop_btn.pack(side='left', padx=6)
 
     def build_stats(self):
