@@ -67,7 +67,8 @@ start)
     pull
     if [[ $target == dew ]]; then
         args="--dew --dew-offset $offset"
-        what="dew point$([[ $offset != 0 ]] && echo " + $offset °C")"
+        what="dew point"
+        [[ $offset == 0 ]] || what+=" + $offset °C"
     else
         args="--target $target"
         what="target $target °C"
