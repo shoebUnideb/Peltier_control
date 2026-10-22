@@ -16,7 +16,8 @@ from matplotlib.figure import Figure
 import serial.tools.list_ports
 from main import (control_power_supply_with_temp_monitoring, preflight_check,
                   find_arduino_port, find_power_supply_port,
-                  TARGET_TEMPERATURE, TARGET_RANGE, V_MIN, DEW_HOLD_OFFSET)
+                  TARGET_TEMPERATURE, TARGET_RANGE, V_MIN, DEW_HOLD_OFFSET,
+                  DEW_SINE_PERIOD, DEW_SINE_AMPLITUDE)
 
 # -- Palette (light background, one accent per role; text stays off the accent colors) --
 BG = '#fcfcfb'
@@ -399,13 +400,31 @@ class ControllerUI:
 
         self.status = tk.Label(bar, text='Idle', bg=BG, fg=INK2)
         self.status.pack(side='left', padx=16)
+
+        # Dew point mode: optional sine wave around the hold point
+        bar2 = tk.Frame(self.root, bg=BG)
+        bar2.pack(fill='x', padx=10, pady=(0, 8))
+        tk.Label(bar2, text='Sine wave around the dew point:  period (s, 0 = hold still):', bg=BG, fg=INK2
+                 ).pack(side='left')
+        self.period_var = tk.StringVar(value=f'{DEW_SINE_PERIOD:g}')
+        self.period_spin = tk.Spinbox(bar2, from_=0, to=3600, increment=30, textvariable=self.period_var, width=6,
+                                      justify='center')
+        self.period_spin.pack(side='left', padx=(6, 12))
+        tk.Label(bar2, text='amplitude (± °C):', bg=BG, fg=INK2).pack(side='left')
+        self.amplitude_var = tk.StringVar(value=f'{DEW_SINE_AMPLITUDE:g}')
+        self.amplitude_spin = tk.Spinbox(bar2, from_=0, to=5, increment=0.25, textvariable=self.amplitude_var,
+                                         width=5, justify='center')
+        self.amplitude_spin.pack(side='left', padx=(6, 12))
+        tk.Label(bar2, text='The plate needs ~10-20 s to respond, so periods under ~60 s come out smaller and late.',
+                 bg=BG, fg=MUTED).pack(side='left')
         self.update_mode()
 
     def update_mode(self, running=False):
         """Enable the inputs that apply to the selected mode (none while a run is going)"""
         dew = self.mode_var.get() == 'dew'
         self.target_spin.config(state='disabled' if dew or running else 'normal')
-        self.offset_spin.config(state='normal' if dew and not running else 'disabled')
+        for spin in (self.offset_spin, self.period_spin, self.amplitude_spin):
+            spin.config(state='normal' if dew and not running else 'disabled')
         for b in self.mode_buttons:
             b.config(state='disabled' if running else 'normal')
 
@@ -489,11 +508,14 @@ class ControllerUI:
         try:
             target = float(self.target_var.get())
             offset = float(self.offset_var.get())
+            period = float(self.period_var.get())
+            amplitude = float(self.amplitude_var.get())
         except ValueError:
             target = offset = None
-        if offset is None or (not dew and not TARGET_RANGE[0] <= target <= TARGET_RANGE[1]):
-            self.status.config(text=f'Enter a target between {TARGET_RANGE[0]:g} and {TARGET_RANGE[1]:g} °C'
-                                    ' and a number for the dew point offset')
+        if (offset is None or period < 0 or amplitude < 0
+                or (not dew and not TARGET_RANGE[0] <= target <= TARGET_RANGE[1])):
+            self.status.config(text=f'Enter a target between {TARGET_RANGE[0]:g} and {TARGET_RANGE[1]:g} °C,'
+                                    ' a number for the dew point offset and a sine period/amplitude ≥ 0')
             return
 
         bad = [row for row in self.check_rows if row[1].itemcget(row[1].oval, 'fill') == RED]
@@ -518,7 +540,8 @@ class ControllerUI:
 
         def run():
             self.error, folder = control_power_supply_with_temp_monitoring(
-                target, self.stop_event, self.readings.put, arduino_port, ps_port, dew=dew, dew_hold_offset=offset)
+                target, self.stop_event, self.readings.put, arduino_port, ps_port, dew=dew, dew_hold_offset=offset,
+                sine_period=period, sine_amplitude=amplitude)
             self.last_run_folder = os.path.abspath(folder) if folder else None
 
         self.worker = threading.Thread(target=run)
@@ -532,6 +555,8 @@ class ControllerUI:
         for stat in (self.stat_target, self.stat_dew, self.stat_air, self.stat_phase):
             stat.set('—')
         what = 'the dew point' + (f' + {offset:g} °C' if offset else '') if dew else f'target {target:g} °C'
+        if dew and period and amplitude:
+            what += f', sine wave ±{amplitude:g} °C every {period:g} s'
         self.status.config(text=f'Starting, {what}…')
 
     def stop(self):

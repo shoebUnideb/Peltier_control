@@ -4,7 +4,9 @@
 #   ./run.sh check                         Pull the latest code and check the Arduino / power supply connections
 #   ./run.sh start [TARGET] [MINUTES]      Push, pull on the lab PC and start main.py detached (default 19.5 °C, 30 min;
 #                                          MINUTES=0 runs until stopped). The run keeps going if SSH disconnects.
-#   ./run.sh start dew [MINUTES] [OFFSET]  Same, but cool to the dew point (+ OFFSET °C, default 0) and hold it there
+#   ./run.sh start dew [MINUTES] [OFFSET] [PERIOD] [AMPLITUDE]
+#                                          Same, but cool to the dew point (+ OFFSET °C, default 0) and hold it there;
+#                                          with PERIOD (s), swing ±AMPLITUDE °C (default 1) around it in a sine wave
 #   ./run.sh log                           Follow the running experiment's console output (Ctrl+C only stops watching)
 #   ./run.sh plot                          Live graphs of the run (temperature, voltage, current) in a window here
 #   ./run.sh stream                        Print the run's whole console output, then follow it (used by mac_ui.py)
@@ -57,18 +59,21 @@ start)
     target=${2:-19.5}
     minutes=${3:-30}
     offset=${4:-0}
-    usage="Usage: $0 start [TARGET] [MINUTES]  or  $0 start dew [MINUTES] [OFFSET]"
+    period=${5:-0}
+    amplitude=${6:-1}
+    usage="Usage: $0 start [TARGET] [MINUTES]  or  $0 start dew [MINUTES] [OFFSET] [PERIOD] [AMPLITUDE]"
     { [[ $target == dew ]] || is_number "$target"; } && is_number "$minutes" && is_number "${offset#-}" \
-        || { echo "$usage"; exit 1; }
+        && is_number "$period" && is_number "$amplitude" || { echo "$usage"; exit 1; }
     if running; then
         echo "An experiment is already running on the lab PC (./run.sh stop to end it)."
         exit 1
     fi
     pull
     if [[ $target == dew ]]; then
-        args="--dew --dew-offset $offset"
+        args="--dew --dew-offset $offset --sine-period $period --sine-amplitude $amplitude"
         what="dew point"
         [[ $offset == 0 ]] || what+=" + $offset °C"
+        [[ $period == 0 ]] || what+=", sine wave ±$amplitude °C every $period s"
     else
         args="--target $target"
         what="target $target °C"
@@ -118,7 +123,7 @@ fetch)
     ls "logs/$folder"
     ;;
 *)
-    sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'
+    sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'
     exit 1
     ;;
 esac

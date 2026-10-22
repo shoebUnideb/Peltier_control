@@ -46,6 +46,11 @@ DEW_SETTLE_TIME = 10.0     # Seconds to ramp the target from the approach offset
 DEW_HOLD_OFFSET = 0.0      # °C above the dew point to hold (0 = at the dew point)
 DEW_SMOOTHING = 0.1        # Weight of each new dew point reading (~10 readings to follow a change)
 DEW_APPROACH_BAND = 0.3    # The settle phase starts once the plate is within this of the approach target (°C)
+# Optional sine wave around the hold point instead of holding still: one cycle per DEW_SINE_PERIOD seconds,
+# DEW_SINE_AMPLITUDE °C above and below. A period of 0 means no wave. The plate takes ~10-20 s to respond, so
+# much shorter periods come out smaller than asked and lag behind the target.
+DEW_SINE_PERIOD = 0.0      # s
+DEW_SINE_AMPLITUDE = 1.0   # °C
 
 def signal_handler(signum, frame):
     """Handle keyboard interrupts and system signals"""
@@ -137,11 +142,13 @@ def preflight_check(arduino_port=None, ps_port=None):
 
 def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_event=None, on_reading=None,
                                               arduino_port=None, ps_port=None, dew=False,
-                                              dew_hold_offset=DEW_HOLD_OFFSET):
+                                              dew_hold_offset=DEW_HOLD_OFFSET, sine_period=DEW_SINE_PERIOD,
+                                              sine_amplitude=DEW_SINE_AMPLITUDE):
     """Heat or cool the Peltier to `target` and hold it there until `stop_event` is set (or Ctrl+C).
 
     With `dew=True`, `target` is ignored and the plate is brought to `dew_hold_offset` °C above the dew point
-    of the room air instead (see DewPointTarget), following it as the humidity changes.
+    of the room air instead (see DewPointTarget), following it as the humidity changes. With a `sine_period` (s)
+    the target then swings `sine_amplitude` °C around that point instead of holding still.
 
     `on_reading`, if given, is called with each logged data row (used by the UI). `arduino_port`/`ps_port`
     override auto-detection.
@@ -212,10 +219,13 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
             if humidity is None or ambient is None:
                 raise RuntimeError("Dew point mode needs the DHT22 (humidity) but it gives no reading; check its wiring")
             dew_target = DewPointTarget(dew_point(ambient, humidity), DEW_APPROACH_OFFSET, DEW_SETTLE_TIME,
-                                        dew_hold_offset, DEW_SMOOTHING, DEW_APPROACH_BAND)
+                                        dew_hold_offset, DEW_SMOOTHING, DEW_APPROACH_BAND, sine_period,
+                                        sine_amplitude)
             target = dew_target.update(plate_temperature, None, None, time.monotonic())
             print(f"Dew point: {dew_target.dew:.2f}°C (air {ambient:.1f}°C, RH {humidity:.1f}%); "
-                  f"cooling to {target:.2f}°C, then settling to {dew_target.dew + dew_hold_offset:.2f}°C")
+                  f"cooling to {target:.2f}°C, then settling to {dew_target.dew + dew_hold_offset:.2f}°C"
+                  + (f", then a sine wave of ±{sine_amplitude:g}°C with a {sine_period:g} s period"
+                     if sine_period > 0 and sine_amplitude else ''))
             if dew_target.dew + dew_hold_offset < TARGET_RANGE[0]:
                 print(f"Warning: the dew point target is below {TARGET_RANGE[0]}°C; the target is clamped there")
 
@@ -384,6 +394,11 @@ if __name__ == "__main__":
                         help="Dew point mode: cool to the dew point of the room air and hold it (ignores --target)")
     parser.add_argument('--dew-offset', type=float, default=DEW_HOLD_OFFSET,
                         help="Dew point mode: hold this many °C above the dew point (default %(default)s)")
+    parser.add_argument('--sine-period', type=float, default=DEW_SINE_PERIOD,
+                        help="Dew point mode: swing the target in a sine wave around the hold point with this "
+                             "period in seconds (default %(default)s = hold still)")
+    parser.add_argument('--sine-amplitude', type=float, default=DEW_SINE_AMPLITUDE,
+                        help="Dew point mode: sine wave amplitude in °C (default %(default)s)")
     parser.add_argument('--duration', type=float, default=None,
                         help="Stop after this many minutes (default: run until Ctrl+C or a STOP file)")
     args = parser.parse_args()
@@ -394,4 +409,5 @@ if __name__ == "__main__":
     duration = args.duration * 60 if args.duration else None
     threading.Thread(target=watch_for_stop, args=(stop_event, duration), daemon=True).start()
     control_power_supply_with_temp_monitoring(target=args.target, stop_event=stop_event, dew=args.dew,
-                                              dew_hold_offset=args.dew_offset)
+                                              dew_hold_offset=args.dew_offset, sine_period=args.sine_period,
+                                              sine_amplitude=args.sine_amplitude)

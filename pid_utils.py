@@ -83,14 +83,18 @@ class DewPointTarget:
 
     Three phases: 'approach' targets `approach_offset` °C above the dew point, so the plate cools at full speed
     without overshooting below it; once the plate is within `band` of that, 'settle' ramps the target down to
-    `hold_offset` above the dew point over `settle_time` seconds; 'hold' then stays there. The dew point is
-    recalculated from every DHT22 reading and smoothed (weight `smoothing` per reading), so the target follows
-    slow changes in the room's humidity without jumping on sensor noise.
+    `hold_offset` above the dew point over `settle_time` seconds; 'hold' then stays there. With a `sine_period`
+    (s), the last phase is 'sine' instead: the target swings `sine_amplitude` °C above and below that point, one
+    full cycle per period, starting upward. The dew point is recalculated from every DHT22 reading and smoothed
+    (weight `smoothing` per reading), so the target follows slow changes in the room's humidity without jumping
+    on sensor noise.
     """
-    def __init__(self, dew, approach_offset, settle_time, hold_offset, smoothing, band):
+    def __init__(self, dew, approach_offset, settle_time, hold_offset, smoothing, band, sine_period=0,
+                 sine_amplitude=0):
         self.dew = dew
         self.approach_offset, self.settle_time, self.hold_offset = approach_offset, settle_time, hold_offset
         self.smoothing, self.band = smoothing, band
+        self.sine_period, self.sine_amplitude = sine_period, sine_amplitude
         self.phase = 'approach'
         self.settle_start = None
 
@@ -102,7 +106,7 @@ class DewPointTarget:
                 and temperature <= self.dew + self.approach_offset + self.band):
             self.phase, self.settle_start = 'settle', now
         if self.phase == 'settle' and now - self.settle_start >= self.settle_time:
-            self.phase = 'hold'
+            self.phase = 'sine' if self.sine_period > 0 and self.sine_amplitude else 'hold'
         return self.target(now)
 
     def target(self, now):
@@ -113,6 +117,9 @@ class DewPointTarget:
             offset = self.approach_offset + (self.hold_offset - self.approach_offset) * min(progress, 1.0)
         else:
             offset = self.hold_offset
+            if self.phase == 'sine':
+                elapsed = now - self.settle_start - self.settle_time
+                offset += self.sine_amplitude * math.sin(2 * math.pi * elapsed / self.sine_period)
         return self.dew + offset
 
 def create_plots(df, output_folder):

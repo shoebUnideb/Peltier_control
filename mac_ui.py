@@ -62,7 +62,7 @@ class MacUI:
 
         root.title('Peltier control (lab PC)')
         root.configure(bg=BG)
-        root.geometry('1200x900')
+        root.geometry('1200x940')
         root.minsize(1000, 750)
         self.build_header()
         self.build_controls()
@@ -130,6 +130,22 @@ class MacUI:
         self.stop_btn = ttk.Button(row, text='Stop', command=self.stop)
         self.stop_btn.pack(side='left', padx=6)
 
+        # Dew point mode: optional sine wave around the hold point
+        row2 = tk.Frame(panel, bg=PANEL)
+        row2.pack(fill='x', padx=10, pady=(0, 10))
+        tk.Label(row2, text='Sine wave around the dew point:  period (s, 0 = hold still):', bg=PANEL, fg=INK2
+                 ).pack(side='left')
+        self.period_var = tk.StringVar(value='0')
+        self.period_spin = ttk.Spinbox(row2, from_=0, to=3600, increment=30, textvariable=self.period_var, width=6)
+        self.period_spin.pack(side='left', padx=(4, 16))
+        tk.Label(row2, text='amplitude (± °C):', bg=PANEL, fg=INK2).pack(side='left')
+        self.amplitude_var = tk.StringVar(value='1')
+        self.amplitude_spin = ttk.Spinbox(row2, from_=0, to=5, increment=0.25, textvariable=self.amplitude_var,
+                                          width=5)
+        self.amplitude_spin.pack(side='left', padx=(4, 16))
+        tk.Label(row2, text='The plate needs ~10-20 s to respond, so periods under ~60 s come out smaller and late.',
+                 bg=PANEL, fg=MUTED).pack(side='left')
+
     def build_stats(self):
         row = tk.Frame(self.root, bg=PANEL)
         row.pack(fill='x', padx=12, pady=(0, 6))
@@ -187,7 +203,8 @@ class MacUI:
         self.fetch_btn.config(state='normal' if idle else 'disabled')
         dew = self.mode.get() == 'dew'
         self.target_spin.config(state='disabled' if dew else 'normal')
-        self.offset_spin.config(state='normal' if dew else 'disabled')
+        for spin in (self.offset_spin, self.period_spin, self.amplitude_spin):
+            spin.config(state='normal' if dew else 'disabled')
 
     def run_command(self, name, args, on_done=None):
         """Run `run.sh args` in a thread, echoing its output to the console; then on_done(returncode, output)"""
@@ -260,8 +277,13 @@ class MacUI:
             assert minutes >= 0
             if self.mode.get() == 'dew':
                 offset = float(self.offset_var.get())
-                args = ['start', 'dew', f'{minutes:g}', f'{offset:g}']
+                period = float(self.period_var.get())
+                amplitude = float(self.amplitude_var.get())
+                assert period >= 0 and amplitude >= 0
+                args = ['start', 'dew', f'{minutes:g}', f'{offset:g}', f'{period:g}', f'{amplitude:g}']
                 what = 'the dew point' + (f' + {offset:g} °C' if offset else '')
+                if period and amplitude:
+                    what += f', then a sine wave of ±{amplitude:g} °C with a {period:g} s period'
             else:
                 target = float(self.target_var.get())
                 assert TARGET_RANGE[0] <= target <= TARGET_RANGE[1]
@@ -269,7 +291,7 @@ class MacUI:
                 what = f'{target:g} °C'
         except (ValueError, AssertionError):
             messagebox.showerror('Invalid settings', f'Check the numbers: target {TARGET_RANGE[0]:g}–'
-                                 f'{TARGET_RANGE[1]:g} °C, duration ≥ 0 minutes.')
+                                 f'{TARGET_RANGE[1]:g} °C; duration, sine period and amplitude ≥ 0.')
             return
         length = 'until stopped' if minutes == 0 else f'for {minutes:g} min'
         if not messagebox.askokcancel('Start run', f'Power the Peltier and bring the plate to {what}, {length}?'):
