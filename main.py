@@ -51,6 +51,9 @@ DEW_APPROACH_BAND = 0.3    # The settle phase starts once the plate is within th
 # much shorter periods come out smaller than asked and lag behind the target.
 DEW_SINE_PERIOD = 0.0      # s
 DEW_SINE_AMPLITUDE = 1.0   # °C
+# On the sine wave the controller aims at the target this many seconds ahead, because the plate lags ~5-8 s behind
+# (measured 2026-10-22 with a 120 s period). 0 = aim at the current target.
+DEW_SINE_LEAD = 6.0        # s
 
 def signal_handler(signum, frame):
     """Handle keyboard interrupts and system signals"""
@@ -220,7 +223,7 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
                 raise RuntimeError("Dew point mode needs the DHT22 (humidity) but it gives no reading; check its wiring")
             dew_target = DewPointTarget(dew_point(ambient, humidity), DEW_APPROACH_OFFSET, DEW_SETTLE_TIME,
                                         dew_hold_offset, DEW_SMOOTHING, DEW_APPROACH_BAND, sine_period,
-                                        sine_amplitude)
+                                        sine_amplitude, DEW_SINE_LEAD)
             target = dew_target.update(plate_temperature, None, None, time.monotonic())
             print(f"Dew point: {dew_target.dew:.2f}°C (air {ambient:.1f}°C, RH {humidity:.1f}%); "
                   f"cooling to {target:.2f}°C, then settling to {dew_target.dew + dew_hold_offset:.2f}°C"
@@ -253,13 +256,16 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
         while not stop_event.is_set():
             temperature, humidity, air_temperature = temp_logger.read_all()
             current_dew = dew_point(air_temperature, humidity) if humidity and air_temperature is not None else None
+            control_target = target  # What the PID aims at; differs from `target` only on the sine wave
             if dew_target:
                 phase = dew_target.phase
                 target = dew_target.update(temperature, humidity, air_temperature, time.monotonic())
+                control_target = dew_target.control_target(time.monotonic())
                 if dew_target.phase != phase:
                     print(f"\nPhase: {phase} -> {dew_target.phase} (target {target:.2f}°C)")
-                if not TARGET_RANGE[0] <= target <= TARGET_RANGE[1]:
-                    target = min(max(target, TARGET_RANGE[0]), TARGET_RANGE[1])
+                if not TARGET_RANGE[0] <= min(target, control_target) <= max(target, control_target) <= TARGET_RANGE[1]:
+                    target, control_target = (min(max(t, TARGET_RANGE[0]), TARGET_RANGE[1])
+                                              for t in (target, control_target))
                     if not clamped:
                         print(f"Warning: target clamped to {target}°C (allowed range {TARGET_RANGE})")
                     clamped = True
@@ -280,7 +286,7 @@ def control_power_supply_with_temp_monitoring(target=TARGET_TEMPERATURE, stop_ev
                 now = time.monotonic()
                 dt = now - prev_time if prev_time is not None else 0.0
                 effort, integral = pid_control(
-                    target, temperature, prev_temp, dt, Kp, Ki, Kd, integral, effort_min, effort_max,
+                    control_target, temperature, prev_temp, dt, Kp, Ki, Kd, integral, effort_min, effort_max,
                     INTEGRAL_BAND
                 )
                 prev_temp, prev_time = temperature, now

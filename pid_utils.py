@@ -85,16 +85,18 @@ class DewPointTarget:
     without overshooting below it; once the plate is within `band` of that, 'settle' ramps the target down to
     `hold_offset` above the dew point over `settle_time` seconds; 'hold' then stays there. With a `sine_period`
     (s), the last phase is 'sine' instead: the target swings `sine_amplitude` °C above and below that point, one
-    full cycle per period, starting upward. The dew point is recalculated from every DHT22 reading and smoothed
+    full cycle per period, starting upward; `control_target` then looks `sine_lead` seconds ahead on the wave, so
+    the controller acts early enough to make up for the plate's lag. The dew point is recalculated from every
+    DHT22 reading and smoothed
     (weight `smoothing` per reading), so the target follows slow changes in the room's humidity without jumping
     on sensor noise.
     """
     def __init__(self, dew, approach_offset, settle_time, hold_offset, smoothing, band, sine_period=0,
-                 sine_amplitude=0):
+                 sine_amplitude=0, sine_lead=0):
         self.dew = dew
         self.approach_offset, self.settle_time, self.hold_offset = approach_offset, settle_time, hold_offset
         self.smoothing, self.band = smoothing, band
-        self.sine_period, self.sine_amplitude = sine_period, sine_amplitude
+        self.sine_period, self.sine_amplitude, self.sine_lead = sine_period, sine_amplitude, sine_lead
         self.phase = 'approach'
         self.settle_start = None
 
@@ -108,6 +110,10 @@ class DewPointTarget:
         if self.phase == 'settle' and now - self.settle_start >= self.settle_time:
             self.phase = 'sine' if self.sine_period > 0 and self.sine_amplitude else 'hold'
         return self.target(now)
+
+    def control_target(self, now):
+        """The target for the controller: on the sine wave, the target `sine_lead` seconds from now"""
+        return self.target(now + self.sine_lead if self.phase == 'sine' else now)
 
     def target(self, now):
         if self.phase == 'approach':
